@@ -17,7 +17,7 @@
     <log4j2.version>2.11.0</log4j2.version>
     <rxjava.version>2.1.15</rxjava.version>
     <smallrye-reactive.version>1.0.0-SNAPSHOT</smallrye-reactive.version>
-    <vertx.launcher>me.escoffier.reactive_summit.demo3.Main</vertx.launcher>
+    <vertx.launcher>me.escoffier.reactive_summit.demo2.Main</vertx.launcher>
   </properties>
 
   <dependencies>
