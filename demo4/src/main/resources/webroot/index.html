@@ -126,9 +126,6 @@
 
     var temperatureChart = c3.generate(donutConfig2);
 
-
-
-
     var activitySource = new EventSource("/neo");
     activitySource.onmessage = function(event) {
      applyNeoState(event.data);
@@ -144,6 +141,12 @@
     };
 
     startTemperaturePolling(temperatureChart);
+
+    // matchHeight the contents of each .card-pf and then the .card-pf itself
+    $(".row-cards-pf > [class*='col'] > .card-pf .card-pf-title").matchHeight();
+    $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
+    $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-footer").matchHeight();
+    $(".row-cards-pf > [class*='col'] > .card-pf").matchHeight();
   });
 
   function _add(array, value, max) {
