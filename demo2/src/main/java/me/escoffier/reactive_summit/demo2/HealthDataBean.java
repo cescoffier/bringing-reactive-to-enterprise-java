@@ -16,7 +16,6 @@ public class HealthDataBean {
 
   @Outgoing("health")
   public CompletionStage<JsonObject> health() {
-    System.out.println("Generating health data...");
     CompletableFuture<JsonObject> future = new CompletableFuture<>();
     delay(() -> future.complete(patient.measure()));
     return future;

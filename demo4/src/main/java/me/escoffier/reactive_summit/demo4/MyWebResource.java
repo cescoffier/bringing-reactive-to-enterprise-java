@@ -37,7 +37,6 @@ public class MyWebResource extends FileResource {
   @GET
   @Path("/beat")
   public Publisher<JsonObject> beat() {
-    System.out.println("Returning the heartbeat: " + heartbeat);
     return heartbeat;
   }
 

@@ -38,15 +38,20 @@ public class HealthDataProcessor {
   public PublisherBuilder<JsonObject> process(PublisherBuilder<JsonObject> input) {
     return input
       .flatMapCompletionStage(json -> invokeStoreService(json).thenApply(x -> {
-        LOGGER.info("The snapshot has been sent to the store service");
+        LOGGER.info("The snapshot has been sent to the snapshot service");
         return json;
       }))
       .map(json -> json.getJsonObject("heartbeat"));
   }
 
+  /**
+   * Uses an asynchronous and non-blocking HTTP client to invoke a (not-so) remote service.
+   * @param data the payload to send
+   * @return a future indicating when the upload has completed (or failed).
+   */
   private CompletionStage<Void> invokeStoreService(JsonObject data) {
     CompletableFuture<Void> future = new CompletableFuture<>();
-    client.post("/store").rxSendJsonObject(data)
+    client.post("/snapshot").rxSendJsonObject(data)
       .ignoreElement()
       .subscribe(
         () -> future.complete(null),

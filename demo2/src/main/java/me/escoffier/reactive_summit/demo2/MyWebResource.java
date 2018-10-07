@@ -24,7 +24,8 @@ public class MyWebResource extends FileResource {
   private Neo neo;
 
   @Inject
-  @Stream("heartbeat") Publisher<JsonObject> heartbeat;
+  @Stream("heartbeat")
+  private Publisher<JsonObject> heartbeat;
 
   @Produces(MediaType.SERVER_SENT_EVENTS)
   @GET
@@ -37,7 +38,6 @@ public class MyWebResource extends FileResource {
   @GET
   @Path("/beat")
   public Publisher<JsonObject> beat() {
-    System.out.println("Returning the heartbeat: " + heartbeat);
     return heartbeat;
   }
 

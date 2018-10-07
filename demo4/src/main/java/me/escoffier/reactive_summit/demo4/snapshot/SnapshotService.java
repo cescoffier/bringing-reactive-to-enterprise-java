@@ -1,9 +1,7 @@
-package me.escoffier.reactive_summit.demo4.store;
+package me.escoffier.reactive_summit.demo4.snapshot;
 
 
 import io.vertx.core.json.JsonObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
@@ -11,10 +9,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 @ApplicationScoped
-@Path("/store")
+@Path("/snapshot")
 public class SnapshotService {
-
-  private static final Logger LOGGER = LogManager.getLogger(SnapshotService.class);
 
   private JsonObject pressure;
   private JsonObject heartbeat;
@@ -28,8 +24,6 @@ public class SnapshotService {
     heartbeat = json.getJsonObject("heartbeat");
     temperature = json.getJsonObject("temperature");
     timestamp = json.getLong("timestamp");
-
-    LOGGER.info("Snapshot saved");
     return "OK";
   }
 
