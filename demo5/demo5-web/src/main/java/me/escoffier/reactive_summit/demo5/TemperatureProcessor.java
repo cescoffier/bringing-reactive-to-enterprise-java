@@ -1,5 +1,6 @@
 package me.escoffier.reactive_summit.demo5;
 
+import io.smallrye.reactive.messaging.annotations.Acknowledgment;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.Vertx;
@@ -13,6 +14,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+
+import static io.smallrye.reactive.messaging.annotations.Acknowledgment.Mode.POST_PROCESSING;
 
 @ApplicationScoped
 public class TemperatureProcessor {
@@ -31,13 +34,17 @@ public class TemperatureProcessor {
 
 
   @Incoming("temperature")
+  @Acknowledgment(POST_PROCESSING)
   public CompletionStage<Void> saveSnapshot(JsonObject temperature) {
     CompletableFuture<Void> future = new CompletableFuture<>();
     LOGGER.info("Saving snapshot {}", temperature.encode());
     client.post("/snapshots").rxSendJsonObject(temperature)
       .ignoreElement()
       .subscribe(
-        () -> future.complete(null),
+        () -> {
+         LOGGER.info("Snapshot sent successfully");
+         future.complete(null);
+        },
         future::completeExceptionally
       );
     return future;

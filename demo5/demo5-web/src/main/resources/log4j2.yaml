@@ -9,7 +9,14 @@ Configuration:
         Pattern: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
 
   Loggers:
+    logger:
+      - name: org.jboss.resteasy.resteasy_jaxrs.i18n
+        level: warn
+        AppenderRef:
+          ref: Console
+
     Root:
       level: debug
       AppenderRef:
         ref: Console
+

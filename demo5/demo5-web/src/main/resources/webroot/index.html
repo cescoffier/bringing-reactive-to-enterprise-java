@@ -51,7 +51,7 @@
       <div class="card-pf">
         <div class="card-pf-heading">
           <h2 class="card-pf-title">
-            Heartbeat (MQTT)
+            Heartbeat (MQTT -> Kafka -> SSE)
           </h2>
         </div>
         <div id="neo-heartbeat" class="line-chart-pf"></div>
@@ -62,12 +62,27 @@
       <div class="card-pf">
         <div class="card-pf-heading">
           <h2 class="card-pf-title">
-            Temperature (polling snapshot service, source MQTT)
+            Temperature (MQTT -> Kafka -> HTTP -> polling)
           </h2>
         </div>
         <div class="pct-donut-chart-pf">
           <div class="pct-donut-chart-pf-chart">
             <div id="neo-temperature"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-4 col-md-4">
+      <div class="card-pf">
+        <div class="card-pf-heading">
+          <h2 class="card-pf-title">
+            Leaps (MQTT -> Kafka -> SSE)
+          </h2>
+        </div>
+        <div class="pct-bar-chart-pf">
+          <div class="pct-bar-chart-pf-chart">
+            <div id="neo-leaps"></div>
           </div>
         </div>
       </div>
@@ -87,10 +102,7 @@
 
 <script>
   var heartbeat = ["heartbeat"];
-  var temperature = [
-    ["Used", 38.0],
-    ["Available", 50]
-  ];
+  var leaps = ["leaps"];
 
   $(document).ready(function() {
     // initialize charts
@@ -106,7 +118,6 @@
 
     // Temperature (donut)
     var donutConfig2 = $().c3ChartDefaults().getDefaultDonutConfig('A');
-
     donutConfig2.bindto = '#neo-temperature';
     donutConfig2.data = {
       type: "donut",
@@ -119,13 +130,29 @@
       ],
       order: null
     };
-
     donutConfig2.tooltip = {
       contents: $().pfGetUtilizationDonutTooltipContentsFn('ºC')
     };
-
     var temperatureChart = c3.generate(donutConfig2);
 
+    // Leaps (Histogram)
+    var categories = ['1', '2', '3', '4', '5'];
+    var verticalBarChartConfig = $().c3ChartDefaults().getDefaultBarConfig(categories);
+    verticalBarChartConfig.bindto = '#neo-leaps';
+    verticalBarChartConfig.axis = {
+      x: {
+        categories: categories,
+        type: 'category'
+      }
+    };
+    verticalBarChartConfig.data = {
+      type: 'bar',
+      columns: [leaps]
+    };
+    var leapsChart = c3.generate(verticalBarChartConfig);
+
+
+    // Connect charts to event source
     var activitySource = new EventSource("/neo");
     activitySource.onmessage = function(event) {
      applyNeoState(event.data);
@@ -137,6 +164,15 @@
       _add(heartbeat, value, 10);
       heartbeatChart.load( {
         columns: [ heartbeat ]
+      });
+    };
+
+    var leapsSource = new EventSource("/leaps");
+    leapsSource.onmessage = function(event) {
+      var value = JSON.parse(event.data).value;
+      _add(leaps, value, 5);
+      leapsChart.load( {
+        columns: [ leaps ]
       });
     };
 
@@ -179,7 +215,6 @@
     setInterval(
       function() {
         $.get("http://localhost:9001/snapshots", function(res) {
-          console.log(JSON.parse(res));
           var value = JSON.parse(res).value;
           temperatureChart.load( {
             columns: [

@@ -31,7 +31,6 @@ public class HealthDataCollector {
     return ReactiveStreams.<MqttMessage>builder()
       .map(message -> Buffer.buffer(message.getPayload()).toJsonObject())
       .map(json -> json.getJsonObject("temperature"))
-      .peek(json -> LOGGER.info("Forwarding {} to Kafka", json.encode()))
       .map(json -> KafkaMessage.of("temperature", "neo", json));
   }
 
@@ -41,7 +40,6 @@ public class HealthDataCollector {
       return input
         .map(message -> Buffer.buffer(message.getPayload()).toJsonObject())
         .map(json -> json.getJsonObject("heartbeat"))
-        .peek(json -> LOGGER.info("Forwarding {} to Kafka", json.encode()))
         .map(json -> KafkaMessage.of("heartbeat", "neo", json));
   }
 
@@ -51,7 +49,7 @@ public class HealthDataCollector {
     return input
       .map(message -> Buffer.buffer(message.getPayload()).toJsonObject())
       .map(json -> json.getJsonObject("state"))
-      .distinctUntilChanged()
+      .distinctUntilChanged(json -> json.getString("state")) // Filter on the "State" key of the json object.
       .doOnNext(json -> LOGGER.info("Forwarding {} to Kafka", json.encode()))
       .map(json -> KafkaMessage.of("state", "neo", json));
   }
@@ -71,6 +69,11 @@ public class HealthDataCollector {
       .map(json -> KafkaMessage.of("leaps", "neo", json));
   }
 
+  /**
+   * Should not be required. It was working without in Fluid.
+   * The issue is that sink are subscribers that can only subscribed one. It was not the case in Fluid.
+   * To be discussed.
+   */
   @Incoming("output")
   @Outgoing("data")
   @Merge
