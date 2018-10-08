@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class Neo {
 
   public Publisher<String> state() {
-    return Flowable.fromArray("sleeping", "awake")
+    return Flowable.fromArray("sleeping", "awake", "eating")
       .zipWith(Flowable.interval(3, TimeUnit.SECONDS), (a, b) -> a)
       .repeat();
   }

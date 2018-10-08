@@ -72,8 +72,6 @@ window.
 
 The application is stopped with `CTRL+C`.
 
--- TODO --
-
 ## Points of interest
 
 * The `me.escoffier.reactive_summit.demo5.collector.HealthDataCollector` class:

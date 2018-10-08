@@ -52,7 +52,7 @@ public class Neo {
     AtomicReference<String> reference = new AtomicReference<>("awake");
 
     StateGenerator() {
-      Flowable.fromArray("sleeping", "awake")
+      Flowable.fromArray("sleeping", "awake", "eating")
         .observeOn(Schedulers.computation())
         .zipWith(Flowable.interval(10, TimeUnit.SECONDS), (a, b) -> a)
         .doOnNext(s -> reference.set(s))
