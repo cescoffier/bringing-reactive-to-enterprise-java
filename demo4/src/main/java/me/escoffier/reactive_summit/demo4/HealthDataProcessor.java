@@ -41,6 +41,7 @@ public class HealthDataProcessor {
       .map(Message::getPayload)
       // MQTT message payloads are byte[]
       .map(bytes -> Buffer.buffer(bytes).toJsonObject())
+
       .flatMapCompletionStage(json -> invokeStoreService(json).thenApply(x -> json))
       .map(json -> json.getJsonObject("heartbeat"))
       // Create a message using the Message.of method
