@@ -16,7 +16,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.BiFunction;
 
 @ApplicationScoped
 public class HealthDataProcessor {
@@ -37,7 +36,7 @@ public class HealthDataProcessor {
   @Multicast
   public PublisherBuilder<JsonObject> process(PublisherBuilder<JsonObject> input) {
     return input
-      .flatMapCompletionStage(json -> invokeStoreService(json).thenApply(x -> {
+      .flatMapCompletionStage(json -> invokeSnapshotService(json).thenApply(x -> {
         LOGGER.info("The snapshot has been sent to the snapshot service");
         return json;
       }))
@@ -49,7 +48,7 @@ public class HealthDataProcessor {
    * @param data the payload to send
    * @return a future indicating when the upload has completed (or failed).
    */
-  private CompletionStage<Void> invokeStoreService(JsonObject data) {
+  private CompletionStage<Void> invokeSnapshotService(JsonObject data) {
     CompletableFuture<Void> future = new CompletableFuture<>();
     client.post("/snapshot").rxSendJsonObject(data)
       .ignoreElement()
