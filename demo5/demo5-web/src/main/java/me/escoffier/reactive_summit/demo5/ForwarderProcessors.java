@@ -2,7 +2,7 @@ package me.escoffier.reactive_summit.demo5;
 
 import io.reactivex.processors.FlowableProcessor;
 import io.smallrye.reactive.messaging.annotations.Acknowledgment;
-import io.smallrye.reactive.messaging.annotations.Multicast;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import io.vertx.core.json.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +26,7 @@ public class ForwarderProcessors {
   @Incoming("kafka-leaps")
   @Outgoing("leaps")
   @Acknowledgment(MANUAL)
-  @Multicast
+  @Broadcast
   public CompletionStage<Message<JsonObject>> forwardLeaps(Message<JsonObject> json) {
     return json.ack().thenApply(x -> {
       LOGGER.info("Forwarding leaps {}", json.getPayload().encode());
@@ -37,7 +37,7 @@ public class ForwarderProcessors {
   @Incoming("kafka-heartbeat")
   @Outgoing("heartbeat")
   @Acknowledgment(PRE_PROCESSING)
-  @Multicast
+  @Broadcast
   public JsonObject forwardHB(JsonObject json) {
     LOGGER.info("Forwarding heartbeat {}", json.encode());
     return json;
@@ -46,7 +46,7 @@ public class ForwarderProcessors {
   @Incoming("kafka-state")
   @Outgoing("state")
   @Acknowledgment(POST_PROCESSING)
-  @Multicast
+  @Broadcast
   public JsonObject forwardState(JsonObject json) {
     LOGGER.info("Forwarding state {}", json.encode());
     return json;

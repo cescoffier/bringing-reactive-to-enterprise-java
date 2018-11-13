@@ -1,6 +1,6 @@
 package me.escoffier.reactive_summit.demo4;
 
-import io.smallrye.reactive.messaging.annotations.Multicast;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import io.smallrye.reactive.messaging.mqtt.MqttMessage;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
@@ -11,8 +11,6 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.reactive.streams.PublisherBuilder;
-import org.eclipse.microprofile.reactive.streams.ReactiveStreams;
-import org.reactivestreams.Publisher;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,7 +32,7 @@ public class HealthDataProcessor {
 
   @Incoming("health")
   @Outgoing("heartbeat")
-  @Multicast
+  @Broadcast
   public PublisherBuilder<Message<JsonObject>> process(PublisherBuilder<MqttMessage> input) {
     return input
       // MqttMessage is the envelope - it could also have been retrieved using PublisherBuilder<byte[]> to access the payload directly

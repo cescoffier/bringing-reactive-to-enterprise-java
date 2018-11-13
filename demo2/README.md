@@ -58,6 +58,6 @@ data: {"timestamp":1538898103497,"name":"heartbeat","heartbeat":129.928657168758
 
 ## Potential questions
 
-* `@Multicast` - the annotation is not yet in the spec, it allows to dispatch the same data to several subscribers.
+* `@Broadcast` - the annotation is not yet in the spec, it allows to dispatch the same data to several subscribers.
 * `@Stream` - the annotation is not in the spec, it allows injecting `Publisher` managed by the framework into beans and
 JAX-RS resources

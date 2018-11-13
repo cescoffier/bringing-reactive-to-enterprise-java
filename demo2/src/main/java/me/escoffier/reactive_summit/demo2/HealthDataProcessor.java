@@ -1,6 +1,6 @@
 package me.escoffier.reactive_summit.demo2;
 
-import io.smallrye.reactive.messaging.annotations.Multicast;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import io.vertx.core.json.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ public class HealthDataProcessor {
 
   @Incoming("health")
   @Outgoing("heartbeat")
-  @Multicast
+  @Broadcast
   public JsonObject filtered(JsonObject input) {
     LOGGER.info("Received {}", input.encode());
     return input.getJsonObject("heartbeat");

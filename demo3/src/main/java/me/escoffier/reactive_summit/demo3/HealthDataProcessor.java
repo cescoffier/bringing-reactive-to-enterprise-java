@@ -1,6 +1,6 @@
 package me.escoffier.reactive_summit.demo3;
 
-import io.smallrye.reactive.messaging.annotations.Multicast;
+import io.smallrye.reactive.messaging.annotations.Broadcast;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.reactivex.core.Vertx;
@@ -33,7 +33,7 @@ public class HealthDataProcessor {
 
   @Incoming("health")
   @Outgoing("heartbeat")
-  @Multicast
+  @Broadcast
   public PublisherBuilder<JsonObject> process(PublisherBuilder<JsonObject> input) {
     return input
       .flatMapCompletionStage(json -> invokeSnapshotService(json).thenApply(x -> {
@@ -45,6 +45,7 @@ public class HealthDataProcessor {
 
   /**
    * Uses an asynchronous and non-blocking HTTP client to invoke a (not-so) remote service.
+   *
    * @param data the payload to send
    * @return a future indicating when the upload has completed (or failed).
    */
