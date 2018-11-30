@@ -26,6 +26,6 @@ public class SnapshotService extends AbstractVerticle {
       temperature = rc.getBodyAsJson();
       rc.response().end("OK");
     });
-    vertx.createHttpServer().requestHandler(router::accept).listen(9001);
+    vertx.createHttpServer().requestHandler(router::accept).listen(9009);
   }
 }

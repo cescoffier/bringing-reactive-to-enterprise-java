@@ -29,7 +29,7 @@ public class TemperatureProcessor {
 
   @PostConstruct
   public void init() {
-    client = WebClient.create(vertx, new WebClientOptions().setDefaultHost("localhost").setDefaultPort(9001));
+    client = WebClient.create(vertx, new WebClientOptions().setDefaultHost("localhost").setDefaultPort(9009));
   }
 
 

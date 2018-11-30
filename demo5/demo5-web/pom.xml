@@ -80,6 +80,12 @@
       <artifactId>smallrye-reactive-messaging-kafka</artifactId>
       <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-kafka-client</artifactId>
+      <version>${vertx.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
