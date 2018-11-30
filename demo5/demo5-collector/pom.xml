@@ -53,28 +53,28 @@
     <dependency>
       <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-streams-operators</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-streams-operators.version}</version>
     </dependency>
     <dependency>
       <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-streams-vertx-execution-model</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-streams-operators.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-messaging-provider</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-messaging-kafka</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-messaging-mqtt</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
 
     <dependency>
