@@ -219,7 +219,7 @@
   function startTemperaturePolling(temperatureChart) {
     setInterval(
       function() {
-        $.get("http://localhost:9001/snapshots", function(res) {
+        $.get("http://localhost:9009/snapshots", function(res) {
           var value = JSON.parse(res).value;
           temperatureChart.load( {
             columns: [

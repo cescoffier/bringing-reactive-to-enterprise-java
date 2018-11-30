@@ -16,7 +16,8 @@
     <redpipe.version>0.0.4</redpipe.version>
     <log4j2.version>2.11.0</log4j2.version>
     <rxjava.version>2.1.15</rxjava.version>
-    <smallrye-reactive.version>1.0.0-SNAPSHOT</smallrye-reactive.version>
+    <smallrye-reactive-streams-operators.version>0.2.2-SNAPSHOT</smallrye-reactive-streams-operators.version>
+    <smallrye-reactive-messaging-provider.version>1.0.0-SNAPSHOT</smallrye-reactive-messaging-provider.version>
     <vertx.launcher>me.escoffier.reactive_summit.demo4.Main</vertx.launcher>
   </properties>
 
@@ -65,18 +66,18 @@
     <dependency>
       <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-streams-operators</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-streams-operators.version}</version>
     </dependency>
     <dependency>
       <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-streams-vertx-execution-model</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-streams-operators.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-messaging-provider</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
 
     <dependency>
@@ -92,9 +93,9 @@
     </dependency>
 
     <dependency>
-      <groupId>io.smallrye</groupId>
+      <groupId>io.smallrye.reactive</groupId>
       <artifactId>smallrye-reactive-messaging-mqtt</artifactId>
-      <version>${smallrye-reactive.version}</version>
+      <version>${smallrye-reactive-messaging-provider.version}</version>
     </dependency>
   </dependencies>
 
